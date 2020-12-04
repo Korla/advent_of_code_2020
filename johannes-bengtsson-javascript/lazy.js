@@ -35,6 +35,12 @@ const lazy = {
                 yield fn(value, i);
             }
         },
+    flatMap: (fn) =>
+        function* flatMap(seq) {
+            for (let value of seq) {
+                yield* lazy.map(fn)(value);
+            }
+        },
     loop: () =>
         function* loop(seq) {
             yield* seq;

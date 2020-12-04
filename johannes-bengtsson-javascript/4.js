@@ -15,7 +15,7 @@ hgt:179cm
 hcl:#cfa07d eyr:2025 pid:166559648
 iyr:2011 ecl:brn hgt:59in`;
 const isBetween = (a, b, c) => b <= a && a <= c;
-const data = getDataWithEmpty(4, example);
+const data = getDataWithEmpty(4);
 const chain = lazy.chain(
     lazy.reduce((passports, row) => {
         if (!row) {
@@ -26,12 +26,9 @@ const chain = lazy.chain(
         return passports;
     }, []),
     lazy.takeLast(),
-    lazy.iterate(function* (s) {
-        yield* Array.from(s)[0];
-    }),
-    lazy.log(1),
+    lazy.flatMap(p => p),
     lazy.map((passport) =>
-        passport[0]
+        passport
             .map((field) => field.match(/([a-z][a-z][a-z])(:)(.*)/))
             .map(([, code, , value]) => ({ code, value }))
             .filter((b) => b.code !== 'cid')
