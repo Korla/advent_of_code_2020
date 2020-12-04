@@ -4,7 +4,7 @@ const lazy = {
             yield* fns.reduce((res, fn) => fn(res), res);
         },
     iterate: (iterator) =>
-        function* merge(seq) {
+        function* iterate(seq) {
             yield* iterator(seq);
         },
     reduce: (fn, start) =>
