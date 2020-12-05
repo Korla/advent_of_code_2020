@@ -17,7 +17,7 @@ describe.only('lazy', () => {
             deepEqual(Array.from(addOne(data)), expected);
         });
 
-        it('passes id', () => {
+        it('passes index', () => {
             const addOne = lazy.map((a, i) => i);
             const data = [1, 2];
             const expected = [0, 1];
@@ -40,11 +40,27 @@ describe.only('lazy', () => {
             deepEqual(Array.from(sum(data)), expected);
         });
 
-        it('passes id', () => {
+        it('passes index', () => {
             const sumIndexes = lazy.reduce((sum, term, i) => sum + i, 0);
             const data = [1, 2, 3, 4];
             const expected = [0, 1, 3, 6];
             deepEqual(Array.from(sumIndexes(data)), expected);
+        });
+    });
+
+    describe('filter', () => {
+        it('filters', () => {
+            const greaterThanThree = lazy.filter((a) => a > 3);
+            const data = [1, 3, 5, 2, 7];
+            const expected = [5,7];
+            deepEqual(Array.from(greaterThanThree(data)), expected);
+        });
+
+        it('passes index', () => {
+            const removeFirstTwo = lazy.filter((a, i) => i > 2);
+            const data = [1, 3, 5, 2, 7];
+            const expected = [2, 7];
+            deepEqual(Array.from(removeFirstTwo(data)), expected);
         });
     });
 });
