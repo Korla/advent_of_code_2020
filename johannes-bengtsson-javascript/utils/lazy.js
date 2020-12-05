@@ -7,14 +7,18 @@ const lazy = {
         function* iterate(seq) {
             yield* iterator(seq);
         },
-    reduce: (fn, start) =>
+    reduce: (fn, accumulated) =>
         function* reduce(seq) {
-            let next = start !== undefined ? start : seq.next().value;
+            seq = seq[Symbol.iterator]();
             let i = 0;
-            for (let value of seq) {
-                next = fn(next, value, i);
+            if (accumulated === undefined) {
+                accumulated = seq.next().value;
+                yield accumulated;
                 i++;
-                yield next;
+            }
+            for (let value of seq) {
+                accumulated = fn(accumulated, value, i++);
+                yield accumulated;
             }
         },
     filter: (fn) =>
