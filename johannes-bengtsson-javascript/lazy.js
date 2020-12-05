@@ -61,20 +61,19 @@ const lazy = {
             let i = 0;
             for (let value of seq) {
                 i++;
-                const val = fn(value, i);
-                if (!val) {
+                if (!fn(value, i)) {
                     return;
                 }
                 yield value;
             }
         },
     takeLast: () =>
-        function* take(seq) {
+        function* takeLast(seq) {
             const all = Array.from(seq);
             yield all[all.length - 1];
         },
     log: (prefix) =>
-        function* take(seq) {
+        function* log(seq) {
             for (let value of seq) {
                 console.log(prefix, value);
                 yield value;
