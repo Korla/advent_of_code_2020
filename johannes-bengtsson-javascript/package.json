@@ -2,7 +2,7 @@
   "name": "johannes-bengtsson-javascript",
   "version": "1.0.0",
   "description": "",
-  "main": "1.js",
+  "main": "1/1.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:w": "mocha **/*.spec.js -w",

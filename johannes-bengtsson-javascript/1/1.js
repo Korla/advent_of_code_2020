@@ -1,15 +1,6 @@
-const { lazy } = require('./lazy');
-const { getData } = require('./advent-utils');
+const { lazy } = require('../lazy');
 
-const example = `1721
-979
-366
-299
-675
-1456`;
-const data = getData(1).map((d) => parseInt(d, 10));
-
-const chain = lazy.chain(
+exports.getSumOfEntries = lazy.chain(
     lazy.iterate(function* (seq) {
         let i1 = 0;
         for (let v1 of seq) {
@@ -34,5 +25,3 @@ const chain = lazy.chain(
     lazy.map(([[d], [d2], [d3]]) => d * d2 * d3),
     lazy.take(1)
 );
-const result = Array.from(chain(data));
-console.log(result);

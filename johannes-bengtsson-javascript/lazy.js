@@ -48,9 +48,10 @@ const lazy = {
         },
     take: (number) =>
         function* take(seq) {
+            let left = number;
             for (let value of seq) {
                 yield value;
-                if (--number === 0) {
+                if (--left === 0) {
                     return;
                 }
             }
