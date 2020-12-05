@@ -12,8 +12,8 @@ const lazy = {
             let next = start !== undefined ? start : seq.next().value;
             let i = 0;
             for (let value of seq) {
-                i++;
                 next = fn(next, value, i);
+                i++;
                 yield next;
             }
         },
@@ -21,18 +21,18 @@ const lazy = {
         function* filter(seq) {
             let i = 0;
             for (let value of seq) {
-                i++;
                 if (fn(value, i)) {
                     yield value;
                 }
+                i++;
             }
         },
     map: (fn) =>
         function* map(seq) {
             let i = 0;
             for (let value of seq) {
-                i++;
                 yield fn(value, i);
+                i++;
             }
         },
     flatMap: (fn) =>
