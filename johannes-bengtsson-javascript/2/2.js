@@ -1,4 +1,4 @@
-const { lazy } = require('../lazy');
+const { lazy } = require('../utils/lazy');
 
 exports.getValidPasswords = lazy.chain(
     lazy.map((i) => i.match(/([0-9]+)-([0-9]+) ([a-z]+): ([a-z]+)/)),

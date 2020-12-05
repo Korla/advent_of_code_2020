@@ -1,5 +1,5 @@
 const { getTreeCountProduct } = require('./3');
-const { getData } = require('../advent-utils');
+const { getData } = require('../utils/get-data');
 const { deepEqual } = require('assert');
 
 describe('Day 3 tests', () => {

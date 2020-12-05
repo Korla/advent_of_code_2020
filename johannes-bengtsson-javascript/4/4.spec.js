@@ -1,5 +1,5 @@
 const { getValidPassports } = require('./4');
-const { getDataWithEmpty } = require('../advent-utils');
+const { getDataWithEmpty } = require('../utils/get-data');
 const { deepEqual } = require('assert');
 
 describe('Day 4 tests', () => {

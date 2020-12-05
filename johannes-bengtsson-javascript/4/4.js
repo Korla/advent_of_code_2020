@@ -1,4 +1,4 @@
-const { lazy } = require('../lazy');
+const { lazy } = require('../utils/lazy');
 
 const isBetween = (a, b, c) => b <= a && a <= c;
 exports.getValidPassports = lazy.chain(

@@ -1,5 +1,5 @@
 const { getValidPasswords } = require('./2');
-const { getData } = require('../advent-utils');
+const { getData } = require('../utils/get-data');
 const { deepEqual } = require('assert');
 
 describe('Day 2 tests', () => {

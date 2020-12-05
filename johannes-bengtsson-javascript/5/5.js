@@ -1,4 +1,4 @@
-const { lazy } = require('../lazy');
+const { lazy } = require('../utils/lazy');
 
 const parseSpec = (trueCase) => (spec) =>
     [...spec]

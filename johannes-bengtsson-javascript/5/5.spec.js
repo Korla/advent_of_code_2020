@@ -1,4 +1,4 @@
-const { getData } = require('../advent-utils');
+const { getData } = require('../utils/get-data');
 const { strictEqual, deepEqual } = require('assert');
 const { getProducts, getRow, getColumn, splitInputs, getHighestProduct } = require('./5');
 
