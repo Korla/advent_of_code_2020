@@ -9,7 +9,7 @@ const lazy = {
         },
     reduce: (fn, start) =>
         function* reduce(seq) {
-            let next = start;
+            let next = start !== undefined ? start : seq.next().value;
             let i = 0;
             for (let value of seq) {
                 i++;

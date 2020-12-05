@@ -6,3 +6,4 @@ exports.getData = getData;
 const getDataWithEmpty = (day, data) =>
     (data || fs.readFileSync(`${day}.txt`, 'utf8')).split('\n');
 exports.getDataWithEmpty = getDataWithEmpty;
+
