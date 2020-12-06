@@ -43,7 +43,7 @@ const lazy = {
     flatMap: (fn) =>
         function* flatMap(seq) {
             for (let value of seq) {
-                yield* lazy.map(fn)(value);
+                yield* fn(value);
             }
         },
     loop: () =>

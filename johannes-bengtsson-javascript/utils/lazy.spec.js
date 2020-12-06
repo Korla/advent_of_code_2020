@@ -87,4 +87,23 @@ describe('lazy', () => {
             deepEqual(Array.from(sort(data)), expected);
         });
     });
+
+    describe('flatMap', () => {
+        it('flatMaps', () => {
+            const flatMap = lazy.flatMap((a) => a);
+            const data = [
+                [1, 3],
+                [5, 2, 7],
+            ];
+            const expected = [1, 3, 5, 2, 7];
+            deepEqual(Array.from(flatMap(data)), expected);
+        });
+
+        it('projects', () => {
+            const flatMap = lazy.flatMap(({ a }) => a);
+            const data = [{ a: [1, 3] }, { a: [5, 2, 7] }];
+            const expected = [1, 3, 5, 2, 7];
+            deepEqual(Array.from(flatMap(data)), expected);
+        });
+    });
 });
