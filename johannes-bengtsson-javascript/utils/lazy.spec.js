@@ -158,4 +158,30 @@ describe('lazy', () => {
             strictEqual(i, 3);
         });
     });
+
+    describe('chain', () => {
+        it('Chains generators', () => {
+            const chain = lazy.chain(
+                lazy.filter((a) => a > 3),
+                lazy.map((a) => a + 1)
+            );
+            const data = [1, 3, 5, 2, 7];
+            const expected = [6, 8];
+            deepEqual(Array.from(chain(data)), expected);
+        });
+
+        it('Chains asynchronously', () => {
+            let i = 0;
+            const chain = lazy.chain(
+                lazy.map((a) => {
+                    i++;
+                    return a + 1;
+                }),
+                lazy.take(2)
+            );
+            const data = [1, 3, 5, 2, 7];
+            Array.from(chain(data))
+            strictEqual(i, 2);
+        });
+    });
 });
