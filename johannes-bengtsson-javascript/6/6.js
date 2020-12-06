@@ -5,7 +5,7 @@ exports.createGroups = lazy.chain(
         ([first, ...answers], row) =>
             !row
                 ? [[], first, ...answers]
-                : [[...first, ...Array.from(row)], ...answers],
+                : [[...first, [...Array.from(row)]], ...answers],
         [[]]
     ),
     lazy.takeLast(),
@@ -13,8 +13,17 @@ exports.createGroups = lazy.chain(
 );
 
 exports.aggregateAnswersForGroup = lazy.chain(
+    lazy.reduce((allAnswered, oneAnswered) =>
+        [...allAnswered, ...oneAnswered].filter(
+            (answer) =>
+                allAnswered.indexOf(answer) >= 0 &&
+                oneAnswered.indexOf(answer) >= 0
+        )
+    ),
+    lazy.takeLast(),
+    lazy.flatMap((p) => p),
     lazy.reduce((prev, curr) => ({ ...prev, [curr]: true }), {}),
-    lazy.takeLast()
+    lazy.takeLast(),
 );
 
 exports.countAllAnswers = lazy.chain(
@@ -24,6 +33,7 @@ exports.countAllAnswers = lazy.chain(
             yield Array.from(exports.aggregateAnswersForGroup(value))[0];
         }
     }),
+    lazy.filter(a => !!a),
     lazy.map((groupAnswers) => Object.keys(groupAnswers).length),
     lazy.reduce(
         (totalCount, groupAnswerCount) => totalCount + groupAnswerCount,
