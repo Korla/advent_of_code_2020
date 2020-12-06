@@ -1,11 +1,11 @@
 const lazy = {
-    chain: (...fns) =>
-        function* chain(res) {
-            yield* fns.reduce((res, fn) => fn(res), res);
-        },
-    iterate: (iterator) =>
-        function* iterate(seq) {
-            yield* iterator(seq);
+    map: (fn) =>
+        function* map(seq) {
+            let i = 0;
+            for (let value of seq) {
+                yield fn(value, i);
+                i++;
+            }
         },
     reduce: (fn, start) =>
         function* reduce(seq) {
@@ -32,19 +32,24 @@ const lazy = {
                 i++;
             }
         },
-    map: (fn) =>
-        function* map(seq) {
-            let i = 0;
-            for (let value of seq) {
-                yield fn(value, i);
-                i++;
-            }
+    sort: (fn) =>
+        function* sort(seq) {
+            const all = Array.from(seq);
+            yield* all.sort(fn);
         },
     flatMap: (fn) =>
         function* flatMap(seq) {
             for (let value of seq) {
                 yield* fn(value);
             }
+        },
+    chain: (...fns) =>
+        function* chain(res) {
+            yield* fns.reduce((res, fn) => fn(res), res);
+        },
+    iterate: (iterator) =>
+        function* iterate(seq) {
+            yield* iterator(seq);
         },
     loop: () =>
         function* loop(seq) {
@@ -76,11 +81,6 @@ const lazy = {
         function* takeLast(seq) {
             const all = Array.from(seq);
             yield all[all.length - 1];
-        },
-    sort: (fn) =>
-        function* sort(seq) {
-            const all = Array.from(seq);
-            yield* all.sort(fn);
         },
     log: (prefix) =>
         function* log(seq) {
