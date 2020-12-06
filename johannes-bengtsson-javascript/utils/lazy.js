@@ -52,6 +52,16 @@ const lazy = {
         function* iterate(seq) {
             yield* iterator(seq);
         },
+    take: (number) =>
+        function* take(seq) {
+            let left = number;
+            for (let value of seq) {
+                yield value;
+                if (--left === 0) {
+                    return;
+                }
+            }
+        },
     takeWhile: (fn) =>
         function* takeWhile(seq) {
             let i = 0;
@@ -71,16 +81,6 @@ const lazy = {
         function* loop(seq) {
             yield* seq;
             yield* lazy.loop()(seq);
-        },
-    take: (number) =>
-        function* take(seq) {
-            let left = number;
-            for (let value of seq) {
-                yield value;
-                if (--left === 0) {
-                    return;
-                }
-            }
         },
     log: (prefix) =>
         function* log(seq) {

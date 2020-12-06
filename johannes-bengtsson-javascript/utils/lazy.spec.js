@@ -130,6 +130,15 @@ describe('lazy', () => {
         });
     });
 
+    describe('take', () => {
+        it('Takes a number of items', () => {
+            const take = lazy.take(4);
+            const data = [1, 3, 5, 2, 7];
+            const expected = [1, 3, 5, 2];
+            deepEqual(Array.from(take(data)), expected);
+        });
+    });
+
     describe('takeWhile', () => {
         it('Takes until a condition is met', () => {
             const takeWhile = lazy.takeWhile((a) => a < 4);
