@@ -1,7 +1,7 @@
 const { lazy } = require('../utils/lazy');
 
 exports.getSumOfEntries = lazy.chain(
-    lazy.iterate(function* (seq) {
+    lazy.runGenerator(function* (seq) {
         let i1 = 0;
         for (let v1 of seq) {
             i1++;

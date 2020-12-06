@@ -48,13 +48,13 @@ const lazy = {
             const all = Array.from(seq);
             yield all[all.length - 1];
         },
+    runGenerator: (iterator) =>
+        function* iterate(seq) {
+            yield* iterator(seq);
+        },
     chain: (...fns) =>
         function* chain(res) {
             yield* fns.reduce((res, fn) => fn(res), res);
-        },
-    iterate: (iterator) =>
-        function* iterate(seq) {
-            yield* iterator(seq);
         },
     loop: () =>
         function* loop(seq) {

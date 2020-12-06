@@ -115,4 +115,18 @@ describe('lazy', () => {
             deepEqual(Array.from(takeLast(data)), expected);
         });
     });
+
+    describe('runGenerator', () => {
+        it('Runs a generator for every element of the sequence', () => {
+            const runGenerator = lazy.runGenerator(function* (seq) {
+                for (let value of seq) {
+                    yield value;
+                    yield value + 1;
+                }
+            });
+            const data = [1, 3, 5, 2, 7];
+            const expected = [1, 2, 3, 4, 5, 6, 2, 3, 7, 8];
+            deepEqual(Array.from(runGenerator(data)), expected);
+        });
+    });
 });
