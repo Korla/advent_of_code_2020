@@ -43,6 +43,11 @@ const lazy = {
                 yield* fn(value);
             }
         },
+    takeLast: () =>
+        function* takeLast(seq) {
+            const all = Array.from(seq);
+            yield all[all.length - 1];
+        },
     chain: (...fns) =>
         function* chain(res) {
             yield* fns.reduce((res, fn) => fn(res), res);
@@ -76,11 +81,6 @@ const lazy = {
                 }
                 yield value;
             }
-        },
-    takeLast: () =>
-        function* takeLast(seq) {
-            const all = Array.from(seq);
-            yield all[all.length - 1];
         },
     log: (prefix) =>
         function* log(seq) {

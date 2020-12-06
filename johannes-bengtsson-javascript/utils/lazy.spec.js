@@ -106,4 +106,13 @@ describe('lazy', () => {
             deepEqual(Array.from(flatMap(data)), expected);
         });
     });
+
+    describe('takeLast', () => {
+        it('Takes the last item', () => {
+            const takeLast = lazy.takeLast();
+            const data = [1, 3, 5, 2, 7];
+            const expected = [7];
+            deepEqual(Array.from(takeLast(data)), expected);
+        });
+    });
 });
