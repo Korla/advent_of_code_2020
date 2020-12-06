@@ -7,8 +7,9 @@ const lazy = {
         function* iterate(seq) {
             yield* iterator(seq);
         },
-    reduce: (fn, accumulated) =>
+    reduce: (fn, start) =>
         function* reduce(seq) {
+            let accumulated = start;
             seq = seq[Symbol.iterator]();
             let i = 0;
             if (accumulated === undefined) {

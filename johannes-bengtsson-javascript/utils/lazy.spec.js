@@ -46,13 +46,21 @@ describe('lazy', () => {
             const expected = [0, 1, 3, 6];
             deepEqual(Array.from(sumIndexes(data)), expected);
         });
+
+        it('does not mutate start', () => {
+            const sumIndexes = lazy.reduce(({ a }) => ({ a: a + 1 }), { a: 0 });
+            const data = [1, 2, 3, 4];
+            const expected = [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }];
+            deepEqual(Array.from(sumIndexes(data)), expected);
+            deepEqual(Array.from(sumIndexes(data)), expected);
+        });
     });
 
     describe('filter', () => {
         it('filters', () => {
             const greaterThanThree = lazy.filter((a) => a > 3);
             const data = [1, 3, 5, 2, 7];
-            const expected = [5,7];
+            const expected = [5, 7];
             deepEqual(Array.from(greaterThanThree(data)), expected);
         });
 
@@ -68,14 +76,14 @@ describe('lazy', () => {
         it('sorts', () => {
             const sort = lazy.sort();
             const data = [1, 3, 5, 2, 7];
-            const expected = [1,2,3,5,7];
+            const expected = [1, 2, 3, 5, 7];
             deepEqual(Array.from(sort(data)), expected);
         });
 
         it('sorts with condition', () => {
-            const sort = lazy.sort((a, b) => b > a ? 1 : -1);
+            const sort = lazy.sort((a, b) => (b > a ? 1 : -1));
             const data = [1, 3, 5, 2, 7];
-            const expected = [7,5,3,2,1];
+            const expected = [7, 5, 3, 2, 1];
             deepEqual(Array.from(sort(data)), expected);
         });
     });
