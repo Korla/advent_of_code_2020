@@ -80,7 +80,7 @@ const lazy = {
     loop: () =>
         function* loop(seq) {
             yield* seq;
-            yield* lazy.loop()(seq);
+            yield* loop(seq);
         },
     log: (prefix) =>
         function* log(seq) {

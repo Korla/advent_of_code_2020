@@ -184,4 +184,16 @@ describe('lazy', () => {
             strictEqual(i, 2);
         });
     });
+
+    describe('loop', () => {
+        it('Loops the same sequence over and over', () => {
+            const loop = lazy.chain(
+                lazy.loop(),
+                lazy.take(11)
+            );
+            const data = [1, 3, 5, 2, 7];
+            const expected = [1, 3, 5, 2, 7, 1, 3, 5, 2, 7, 1];
+            deepEqual(Array.from(loop(data)), expected);
+        });
+    });
 });
