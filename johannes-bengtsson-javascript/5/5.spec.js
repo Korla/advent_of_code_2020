@@ -1,6 +1,13 @@
 const { getData } = require('../utils/get-data');
 const { strictEqual, deepEqual } = require('assert');
-const { getProducts, getRow, getColumn, splitInputs, getHighestProduct } = require('./5');
+const {
+    getProducts,
+    getRow,
+    getColumn,
+    splitInputs,
+    getHighestProduct,
+    getEmptySeat,
+} = require('./5');
 
 describe('Day 5 tests', () => {
     it('splitInputs', () => {
@@ -36,9 +43,15 @@ describe('Day 5 tests', () => {
         deepEqual(Array.from(getProducts(data)), expected);
     });
 
-    it('Get highest product', () => {
+    it('getHighestProduct', () => {
         const data = getData(5);
         const expected = [813];
         deepEqual(Array.from(getHighestProduct(data)), expected);
+    });
+
+    it('getEmptySeat', () => {
+        const data = getData(5);
+        const expected = [612];
+        deepEqual(Array.from(getEmptySeat(data)), expected);
     });
 });
