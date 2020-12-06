@@ -52,6 +52,17 @@ const lazy = {
         function* iterate(seq) {
             yield* iterator(seq);
         },
+    takeWhile: (fn) =>
+        function* takeWhile(seq) {
+            let i = 0;
+            for (let value of seq) {
+                i++;
+                if (!fn(value, i)) {
+                    return;
+                }
+                yield value;
+            }
+        },
     chain: (...fns) =>
         function* chain(res) {
             yield* fns.reduce((res, fn) => fn(res), res);
@@ -69,17 +80,6 @@ const lazy = {
                 if (--left === 0) {
                     return;
                 }
-            }
-        },
-    takeWhile: (fn) =>
-        function* takeWhile(seq) {
-            let i = 0;
-            for (let value of seq) {
-                i++;
-                if (!fn(value, i)) {
-                    return;
-                }
-                yield value;
             }
         },
     log: (prefix) =>

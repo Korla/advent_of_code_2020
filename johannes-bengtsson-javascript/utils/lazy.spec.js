@@ -1,5 +1,5 @@
 const { lazy } = require('./lazy');
-const { deepEqual } = require('assert');
+const { deepEqual, strictEqual } = require('assert');
 
 describe('lazy', () => {
     describe('map', () => {
@@ -127,6 +127,26 @@ describe('lazy', () => {
             const data = [1, 3, 5, 2, 7];
             const expected = [1, 2, 3, 4, 5, 6, 2, 3, 7, 8];
             deepEqual(Array.from(runGenerator(data)), expected);
+        });
+    });
+
+    describe('takeWhile', () => {
+        it('Takes until a condition is met', () => {
+            const takeWhile = lazy.takeWhile((a) => a < 4);
+            const data = [1, 3, 5, 2, 7];
+            const expected = [1, 3];
+            deepEqual(Array.from(takeWhile(data)), expected);
+        });
+
+        it('Calls the callback until the condition is met', () => {
+            let i = 0;
+            const takeWhile = lazy.takeWhile((a) => {
+                i++;
+                return a < 4;
+            });
+            const data = [1, 3, 5, 2, 7];
+            Array.from(takeWhile(data));
+            strictEqual(i, 3);
         });
     });
 });
