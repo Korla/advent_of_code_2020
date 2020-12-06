@@ -76,6 +76,11 @@ const lazy = {
             const all = Array.from(seq);
             yield all[all.length - 1];
         },
+    sort: (fn) =>
+        function* sort(seq) {
+            const all = Array.from(seq);
+            yield* all.sort(fn);
+        },
     log: (prefix) =>
         function* log(seq) {
             for (let value of seq) {

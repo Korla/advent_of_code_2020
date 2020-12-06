@@ -1,7 +1,7 @@
 const { lazy } = require('./lazy');
 const { deepEqual } = require('assert');
 
-describe.only('lazy', () => {
+describe('lazy', () => {
     describe('map', () => {
         it('projects arrays', () => {
             const addOne = lazy.map((a) => a + 1);
@@ -61,6 +61,22 @@ describe.only('lazy', () => {
             const data = [1, 3, 5, 2, 7];
             const expected = [2, 7];
             deepEqual(Array.from(removeFirstTwo(data)), expected);
+        });
+    });
+
+    describe('sort', () => {
+        it('sorts', () => {
+            const sort = lazy.sort();
+            const data = [1, 3, 5, 2, 7];
+            const expected = [1,2,3,5,7];
+            deepEqual(Array.from(sort(data)), expected);
+        });
+
+        it('sorts with condition', () => {
+            const sort = lazy.sort((a, b) => b > a ? 1 : -1);
+            const data = [1, 3, 5, 2, 7];
+            const expected = [7,5,3,2,1];
+            deepEqual(Array.from(sort(data)), expected);
         });
     });
 });
