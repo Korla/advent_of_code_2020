@@ -159,6 +159,26 @@ describe('lazy', () => {
         });
     });
 
+    describe('doTakeWhile', () => {
+        it('Takes until a condition is met', () => {
+            const doTakeWhile = lazy.doTakeWhile((a) => a < 4);
+            const data = [1, 3, 5, 2, 7];
+            const expected = [1, 3, 5];
+            deepEqual(Array.from(doTakeWhile(data)), expected);
+        });
+
+        it('Calls the callback until the condition is met', () => {
+            let i = 0;
+            const doTakeWhile = lazy.doTakeWhile((a) => {
+                i++;
+                return a < 4;
+            });
+            const data = [1, 3, 5, 2, 7];
+            Array.from(doTakeWhile(data));
+            strictEqual(i, 3);
+        });
+    });
+
     describe('chain', () => {
         it('Chains generators', () => {
             const chain = lazy.chain(

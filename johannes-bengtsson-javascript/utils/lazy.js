@@ -73,6 +73,17 @@ const lazy = {
                 yield value;
             }
         },
+    doTakeWhile: (fn) =>
+        function* doTakeWhile(seq) {
+            let i = 0;
+            for (let value of seq) {
+                i++;
+                yield value;
+                if (!fn(value, i)) {
+                    return;
+                }
+            }
+        },
     chain: (...fns) =>
         function* chain(res) {
             yield* fns.reduce((res, fn) => fn(res), res);
