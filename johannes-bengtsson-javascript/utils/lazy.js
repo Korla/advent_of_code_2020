@@ -1,8 +1,10 @@
+const isIterable = seq => typeof seq[Symbol.iterator] == "function"
+
 const lazy = {
     map: (fn) =>
         function* map(seq) {
             let i = 0;
-            for (let value of seq) {
+            for (const value of seq) {
                 yield fn(value, i);
                 i++;
             }
@@ -17,7 +19,7 @@ const lazy = {
                 yield accumulated;
                 i++;
             }
-            for (let value of seq) {
+            for (const value of seq) {
                 accumulated = fn(accumulated, value, i++);
                 yield accumulated;
             }
@@ -25,7 +27,7 @@ const lazy = {
     filter: (fn) =>
         function* filter(seq) {
             let i = 0;
-            for (let value of seq) {
+            for (const value of seq) {
                 if (fn(value, i)) {
                     yield value;
                 }
@@ -39,7 +41,7 @@ const lazy = {
         },
     flatMap: (fn) =>
         function* flatMap(seq) {
-            for (let value of seq) {
+            for (const value of seq) {
                 yield* fn(value);
             }
         },
@@ -55,7 +57,7 @@ const lazy = {
     take: (number) =>
         function* take(seq) {
             let left = number;
-            for (let value of seq) {
+            for (const value of seq) {
                 yield value;
                 if (--left === 0) {
                     return;
@@ -65,7 +67,7 @@ const lazy = {
     takeWhile: (fn) =>
         function* takeWhile(seq) {
             let i = 0;
-            for (let value of seq) {
+            for (const value of seq) {
                 i++;
                 if (!fn(value, i)) {
                     return;
@@ -76,7 +78,7 @@ const lazy = {
     doTakeWhile: (fn) =>
         function* doTakeWhile(seq) {
             let i = 0;
-            for (let value of seq) {
+            for (const value of seq) {
                 i++;
                 yield value;
                 if (!fn(value, i)) {
@@ -90,12 +92,16 @@ const lazy = {
         },
     loop: () =>
         function* loop(seq) {
-            yield* seq;
-            yield* loop(seq);
+            const loopingItems = [];
+            for(const value of seq) {
+                loopingItems.push(value);
+                yield value;
+            }
+            yield* loop(loopingItems);
         },
     log: (prefix) =>
         function* log(seq) {
-            for (let value of seq) {
+            for (const value of seq) {
                 console.log(prefix, value);
                 yield value;
             }

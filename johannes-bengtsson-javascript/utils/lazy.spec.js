@@ -200,19 +200,41 @@ describe('lazy', () => {
                 lazy.take(2)
             );
             const data = [1, 3, 5, 2, 7];
-            Array.from(chain(data))
+            Array.from(chain(data));
             strictEqual(i, 2);
+        });
+
+        it('Composes chains', () => {
+            const filter = lazy.chain(lazy.filter((a) => a > 3));
+            const map = lazy.chain(lazy.map((a) => a + 1));
+            const chain = lazy.chain(filter, map);
+            const data = [1, 3, 5, 2, 7];
+            const expected = [6, 8];
+            deepEqual(Array.from(chain(data)), expected);
         });
     });
 
     describe('loop', () => {
         it('Loops the same sequence over and over', () => {
-            const loop = lazy.chain(
-                lazy.loop(),
-                lazy.take(11)
-            );
+            const loop = lazy.chain(lazy.loop(), lazy.take(11));
             const data = [1, 3, 5, 2, 7];
             const expected = [1, 3, 5, 2, 7, 1, 3, 5, 2, 7, 1];
+            deepEqual(Array.from(loop(data)), expected);
+        });
+
+        it('Loops generators', () => {
+            const loop = lazy.chain(
+                lazy.runGenerator(function* (seq) {
+                    yield Array.from(seq);
+                }),
+                lazy.loop(),
+                lazy.take(2)
+            );
+            const data = [1, 3, 5, 2, 7];
+            const expected = [
+                [1, 3, 5, 2, 7],
+                [1, 3, 5, 2, 7],
+            ];
             deepEqual(Array.from(loop(data)), expected);
         });
     });
