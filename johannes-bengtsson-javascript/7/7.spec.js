@@ -67,15 +67,15 @@ describe('Day 7 tests', () => {
         deepEqual(Array.from(createBagSpecs(data)), expected);
     });
 
-    it.only('getShinyContainers example', () => {
+    it('getShinyContainers example', () => {
         const data = getDataWithEmpty(7, testData);
         const expected = [4];
-        deepEqual(Array.from(getShinyContainers([Array.from(createBagSpecs(data))])), expected);
+        deepEqual(Array.from(getShinyContainers(data)), expected);
     });
 
-    it.only('getShinyContainers', () => {
+    it('getShinyContainers', () => {
         const data = getDataWithEmpty(7);
         const expected = [205];
-        deepEqual(Array.from(getShinyContainers([Array.from(createBagSpecs(data))])), expected);
+        deepEqual(Array.from(getShinyContainers(data)), expected);
     });
 });

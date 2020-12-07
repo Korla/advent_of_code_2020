@@ -14,6 +14,9 @@ exports.createBagSpecs = lazy.chain(
 );
 
 exports.getShinyContainers = lazy.chain(
+    lazy.runGenerator(function* (seq) {
+        yield Array.from(exports.createBagSpecs((seq)));
+    }),
     lazy.loop(),
     lazy.reduce(
         ({ containers, added }, bagSpecs) => {
@@ -35,6 +38,6 @@ exports.getShinyContainers = lazy.chain(
         }
     ),
     lazy.doTakeWhile(({ added }) => added.length > 0),
-    lazy.map(({ containers }) => new Set(containers).size - 1),
-    lazy.takeLast()
+    lazy.takeLast(),
+    lazy.map(({ containers }) => new Set(containers).size - 1)
 );
