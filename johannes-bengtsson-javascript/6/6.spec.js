@@ -49,7 +49,7 @@ describe('Day 6 tests', () => {
 
     it('aggregateAnswersForGroup empty', () => {
         const data = [['a'], ['b'], ['c']];
-        const expected = [undefined];
+        const expected = [];
         deepEqual(Array.from(aggregateAnswersForGroup(data)), expected);
     });
 
