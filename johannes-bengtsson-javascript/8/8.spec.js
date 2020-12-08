@@ -1,6 +1,11 @@
 const { getDataWithEmpty } = require('../utils/get-data');
 const { deepEqual } = require('assert');
-const { parseData, runProgram } = require('./8');
+const {
+    parseData,
+    createMutatedData,
+    runProgramUntilRevisit,
+    runProgramUntilFoundSolution,
+} = require('./8');
 
 const testData = `nop +0
 acc +1
@@ -11,6 +16,10 @@ acc -99
 acc +1
 jmp -4
 acc +6`;
+
+const testData2 = `nop +0
+acc +1
+jmp +4`;
 
 describe('Day 8 tests', () => {
     it('parseData', () => {
@@ -29,15 +38,44 @@ describe('Day 8 tests', () => {
         deepEqual(Array.from(parseData(data)), expected);
     });
 
-    it('runProgram example', () => {
+    it('runProgramUntilRevisit example', () => {
         const data = getDataWithEmpty(8, testData);
         const expected = [5];
-        deepEqual(Array.from(runProgram(data)), expected);
+        deepEqual(Array.from(runProgramUntilRevisit(data)), expected);
     });
 
-    it('runProgram', () => {
+    it('runProgramUntilRevisit', () => {
         const data = getDataWithEmpty(8);
         const expected = [1671];
-        deepEqual(Array.from(runProgram(data)), expected);
+        deepEqual(Array.from(runProgramUntilRevisit(data)), expected);
+    });
+
+    it('createMutatedData', () => {
+        const data = getDataWithEmpty(8, testData2);
+        const expected = [
+            [
+                ['jmp', +0],
+                ['acc', +1],
+                ['jmp', +4],
+            ],
+            [
+                ['nop', +0],
+                ['acc', +1],
+                ['nop', +4],
+            ],
+        ];
+        deepEqual(Array.from(createMutatedData(data)), expected);
+    });
+
+    it('runProgramUntilFoundSolution example', () => {
+        const data = getDataWithEmpty(8, testData);
+        const expected = [8];
+        deepEqual(Array.from(runProgramUntilFoundSolution(data)), expected);
+    });
+
+    it('runProgramUntilFoundSolution', () => {
+        const data = getDataWithEmpty(8);
+        const expected = [892];
+        deepEqual(Array.from(runProgramUntilFoundSolution(data)), expected);
     });
 });
