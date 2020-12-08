@@ -28,11 +28,7 @@ exports.aggregateAnswersForGroup = lazy.chain(
 
 exports.countAllAnswers = lazy.chain(
     exports.createGroups,
-    lazy.runGenerator(function* (seq) {
-        for (let value of seq) {
-            yield Array.from(exports.aggregateAnswersForGroup(value))[0];
-        }
-    }),
+    lazy.map(value => Array.from(exports.aggregateAnswersForGroup(value))[0]),
     lazy.filter(a => !!a),
     lazy.map((groupAnswers) => Object.keys(groupAnswers).length),
     lazy.reduce(
