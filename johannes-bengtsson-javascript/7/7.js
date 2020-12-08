@@ -25,9 +25,9 @@ exports.createBagSpecs = lazy.chain(
 );
 
 exports.getShinyContainers = lazy.chain(
-    lazy.runGenerator(function* (seq) {
-        yield Array.from(exports.createBagSpecs(seq));
-    }),
+    exports.createBagSpecs,
+    lazy.concat(),
+    lazy.takeLast(),
     lazy.loop(),
     lazy.reduce(
         ({ containers, added }, bagSpecs) => {
@@ -52,11 +52,12 @@ exports.getShinyContainers = lazy.chain(
 );
 
 exports.getNumberOfBagsInShiny = lazy.chain(
-    lazy.runGenerator(function* (seq) {
-        yield Array.from(exports.createBagSpecs(seq)).filter(
-            ([color, childColor]) => childColor !== undefined
-        );
-    }),
+    exports.createBagSpecs,
+    lazy.filter(
+        ([color, childColor]) => childColor !== undefined
+    ),
+    lazy.concat(),
+    lazy.takeLast(),
     lazy.loop(),
     lazy.reduce(
         ({ count, added }, bagSpecs) => {

@@ -12,9 +12,9 @@ const instructions = {
 };
 
 exports.runProgram = lazy.chain(
-    lazy.runGenerator(function* (seq) {
-        yield Array.from(exports.parseData(seq));
-    }),
+    exports.parseData,
+    lazy.concat(),
+    lazy.takeLast(),
     lazy.loop(),
     lazy.reduce(
         ({ accumulator, current, visited }, program) => {
