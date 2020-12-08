@@ -56,6 +56,15 @@ describe('lazy', () => {
         });
     });
 
+    describe('concat', () => {
+        it('concatenates', () => {
+            const concat = lazy.concat();
+            const data = [1, 2, 4];
+            const expected = [[1], [1, 2], [1, 2, 4]];
+            deepEqual(Array.from(concat(data)), expected);
+        });
+    });
+
     describe('filter', () => {
         it('filters', () => {
             const greaterThanThree = lazy.filter((a) => a > 3);

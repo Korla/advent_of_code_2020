@@ -1,5 +1,3 @@
-const isIterable = seq => typeof seq[Symbol.iterator] == "function"
-
 const lazy = {
     map: (fn) =>
         function* map(seq) {
@@ -24,6 +22,7 @@ const lazy = {
                 yield accumulated;
             }
         },
+    concat: () => lazy.reduce((prev, curr) => [...prev, curr], []),
     filter: (fn) =>
         function* filter(seq) {
             let i = 0;
