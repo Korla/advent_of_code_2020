@@ -97,9 +97,9 @@ describe('Day 7 tests', () => {
         deepEqual(Array.from(getNumberOfBagsInShiny(data)), expected);
     });
 
-    it.only('getNumberOfBagsInShiny', () => {
+    it('getNumberOfBagsInShiny', () => {
         const data = getDataWithEmpty(7);
-        const expected = [12];
+        const expected = [80902];
         deepEqual(Array.from(getNumberOfBagsInShiny(data)), expected);
     });
 });
