@@ -47,7 +47,9 @@ const lazy = {
     takeLast: () =>
         function* takeLast(seq) {
             const all = Array.from(seq);
-            yield all[all.length - 1];
+            if (all.length) {
+                yield all[all.length - 1];
+            }
         },
     runGenerator: (iterator) =>
         function* iterate(seq) {
@@ -92,7 +94,7 @@ const lazy = {
     loop: () =>
         function* loop(seq) {
             const loopingItems = [];
-            for(const value of seq) {
+            for (const value of seq) {
                 loopingItems.push(value);
                 yield value;
             }

@@ -123,6 +123,13 @@ describe('lazy', () => {
             const expected = [7];
             deepEqual(Array.from(takeLast(data)), expected);
         });
+
+        it('Handles an empty array', () => {
+            const takeLast = lazy.takeLast();
+            const data = [];
+            const expected = [];
+            deepEqual(Array.from(takeLast(data)), expected);
+        });
     });
 
     describe('runGenerator', () => {
