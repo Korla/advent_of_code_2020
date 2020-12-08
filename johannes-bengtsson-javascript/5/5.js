@@ -42,8 +42,10 @@ exports.getHighestProduct = lazy.chain(
 exports.getEmptySeat = lazy.chain(
     getProducts,
     lazy.sort((a, b) => (a > b ? 1 : -1)),
-    lazy.runGenerator(function* (seq) {
-        const all = Array.from(seq);
-        yield all.find((id, i) => i > 0 && all[i-1] !== id - 1) - 1;
-    })
+    lazy.reduce((prev, curr) => [...prev, curr], []),
+    lazy.takeLast(),
+    lazy.reduce(
+        (prev, all) => all.find((id, i) => i > 0 && all[i - 1] !== id - 1) - 1,
+        null
+    )
 );
