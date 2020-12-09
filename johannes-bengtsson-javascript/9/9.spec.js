@@ -23,7 +23,7 @@ const testData = `35
 309
 576`;
 
-describe.only('Day 9 tests', () => {
+describe('Day 9 tests', () => {
     it('getInGroupsOf5', () => {
         const example = `1
 2
