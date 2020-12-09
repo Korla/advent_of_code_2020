@@ -53,3 +53,17 @@ exports.findNumberWhichDoesntSum = (number) =>
             }
         })
     );
+
+exports.findWeakness = (total) =>
+    lazy.chain(
+        lazy.runGenerator(function* (seq) {
+            seq = Array.from(seq);
+            for (let i = 2; i < seq.length; i++) {
+                yield* exports.getInGroups(i)(seq);
+            }
+        }),
+        lazy.filter((a) => a.reduce((a, b) => a + b) === total),
+        lazy.map((a) => a.sort((a, b) => (a > b ? 1 : -1))),
+        lazy.map((a) => a[0] + a[a.length - 1]),
+        lazy.take(1)
+    );

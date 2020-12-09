@@ -1,6 +1,11 @@
 const { getDataWithEmpty } = require('../utils/get-data');
 const { deepEqual } = require('assert');
-const { getInGroups, createAllSums, findNumberWhichDoesntSum } = require('./9');
+const {
+    getInGroups,
+    createAllSums,
+    findNumberWhichDoesntSum,
+    findWeakness,
+} = require('./9');
 
 const testData = `35
 20
@@ -58,5 +63,17 @@ describe('Day 9 tests', () => {
         const data = getDataWithEmpty(9);
         const expected = [466456641];
         deepEqual(Array.from(findNumberWhichDoesntSum(25)(data)), expected);
+    });
+
+    it('findWeakness testData', () => {
+        const data = getDataWithEmpty(9, testData);
+        const expected = [62];
+        deepEqual(Array.from(findWeakness(127)(data)), expected);
+    });
+
+    it('findWeakness', () => {
+        const data = getDataWithEmpty(9);
+        const expected = [55732936];
+        deepEqual(Array.from(findWeakness(466456641)(data)), expected);
     });
 });
