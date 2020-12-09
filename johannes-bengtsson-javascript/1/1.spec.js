@@ -12,13 +12,13 @@ describe('Day 1 tests', () => {
 299
 675
 1456`
-        ).map(Number);
+        );
         const expected = [241861950];
         deepEqual(Array.from(getSumOfEntries(data)), expected);
     });
 
     it('Get sum of Entries', () => {
-        const data = getData(1).map(Number);
+        const data = getData(1);
         const expected = [42140160];
         deepEqual(Array.from(getSumOfEntries(data)), expected);
     });
