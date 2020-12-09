@@ -52,7 +52,8 @@ const lazy = {
             }
         },
     runGenerator: (iterator) =>
-        function* iterate(seq) {
+        function* runGenerator(seq) {
+            seq = seq[Symbol.iterator]();
             yield* iterator(seq);
         },
     take: (number) =>
