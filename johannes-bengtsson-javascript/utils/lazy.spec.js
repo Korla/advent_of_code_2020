@@ -114,6 +114,13 @@ describe('lazy', () => {
             const expected = [1, 3, 5, 2, 7];
             deepEqual(Array.from(flatMap(data)), expected);
         });
+
+        it('passes index', () => {
+            const flatMap = lazy.flatMap(({ a }, i) => a.map((b) => b + i));
+            const data = [{ a: [1, 2] }, { a: [3, 4, 5] }];
+            const expected = [1, 2, 4, 5, 6];
+            deepEqual(Array.from(flatMap(data)), expected);
+        });
     });
 
     describe('takeLast', () => {

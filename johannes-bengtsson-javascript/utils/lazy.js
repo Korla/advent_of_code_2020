@@ -40,8 +40,10 @@ const lazy = {
         },
     flatMap: (fn) =>
         function* flatMap(seq) {
+            let i = 0;
             for (const value of seq) {
-                yield* fn(value);
+                yield* fn(value, i);
+                i++;
             }
         },
     takeLast: () =>

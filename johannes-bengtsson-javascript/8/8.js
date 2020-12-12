@@ -76,7 +76,7 @@ exports.runProgramUntilRevisit = lazy.chain(
 exports.runProgramUntilFoundSolution = lazy.chain(
     exports.createMutatedData,
     lazy.map(exports.runProgram),
-    lazy.flatMap(Array.from),
+    lazy.flatMap(a => Array.from(a)),
     lazy.doTakeWhile(({ isComplete }) => !isComplete),
     lazy.takeLast(),
     lazy.map(({ accumulator }) => accumulator)
