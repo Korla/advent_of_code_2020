@@ -1,36 +1,32 @@
-exports.findTime = (data) => {
-    const [[firstValue], ...rest] = data[1]
+exports.parseData = (data) => {
+    const [[value, delta], ...rest] = data[1]
         .split(',')
         .map((v, i) => [Number(v), i])
-        .filter(([v]) => !!v);
-    return exports.findSequence(firstValue, rest);
+        .filter(([v]) => !!v)
+        .sort(([v], [v2]) => v2 - v);
+    return [[value, delta], rest.map(([v, d]) => [v, d - delta])];
 };
 
-exports.findSequence = (first, rest) => {
-    const generators = rest.map(([value, delta]) =>
-        exports.getNextBusTime(value, delta, 0)
-    );
-    generators.forEach((g) => g.next());
-    let curr = first;
-    while (
-        generators.map((g) => g.next(curr).value).filter((i) => i === false)
-            .length > 0
-    ) {
-        curr += first;
-        console.log('curr', curr);
-    }
-    return curr;
-};
+exports.findTime = (data) => exports.findSequence(...exports.parseData(data));
 
-exports.getNextBusTime = function* (value, delta, askedFor) {
+exports.findSequence = ([value, delta], rest) => {
+    // console.log('value', value);
+    // console.log('delta', delta);
+    // console.log('rest', rest);
     let curr = 0;
-    while (true) {
-        if (curr === askedFor + delta) {
-            askedFor = yield true;
-        } else if (curr > askedFor) {
-            askedFor = yield false;
-        } else {
-            curr += value;
-        }
+    while (
+        rest
+            .map(([value, delta]) => {
+                // console.log('curr', curr);
+                // console.log('value', value);
+                // console.log('delta', delta);
+                // console.log('curr - delta', curr - delta);
+                // console.log('(curr + delta) % value', (curr + delta) % value);
+                return (curr + delta) % value === 0;
+            })
+            .filter((i) => i === false).length > 0
+    ) {
+        curr += value;
     }
+    return curr - delta;
 };

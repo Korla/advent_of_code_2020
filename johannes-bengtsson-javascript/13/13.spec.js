@@ -1,18 +1,22 @@
 const { getDataWithEmpty } = require('../utils/get-data');
 const { deepEqual } = require('assert');
-const { findTime, getNextBusTime, findSequence } = require('./13');
+const { findTime, parseData } = require('./13');
 
 const example = `939
 7,13,x,x,59,x,31,19`;
 
-describe.only('Day 13 tests', () => {
-    it('getNextBusTime', () => {
-        const sut = getNextBusTime(4, 1, 5);
-        deepEqual(sut.next().value, false);
-        deepEqual(sut.next(4).value, false);
-        deepEqual(sut.next(7).value, true);
-        deepEqual(sut.next(13).value, false);
-        deepEqual(sut.next(15).value, true);
+describe('Day 13 tests', () => {
+    it('parseData', () => {
+        const data = getDataWithEmpty(13, example);
+        deepEqual(parseData(data), [
+            [59, 4],
+            [
+                [31, 2],
+                [19, 3],
+                [13, -3],
+                [7, -4],
+            ],
+        ]);
     });
 
     it('findTime example single generator', () => {
@@ -91,9 +95,9 @@ describe.only('Day 13 tests', () => {
         deepEqual(findTime(data), expected);
     });
 
-    it.only('findTime', () => {
-        const data = getDataWithEmpty(13);
-        const expected = 1068781;
-        deepEqual(findTime(data), expected);
-    });
+    // it.only('findTime', () => {
+    //     const data = getDataWithEmpty(13);
+    //     const expected = 1068781;
+    //     deepEqual(findTime(data), expected);
+    // });
 });
