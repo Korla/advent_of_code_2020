@@ -10,7 +10,6 @@ exports.getValidPasswords = lazy.chain(
     })),
     lazy.filter(
         ({ low, high, letter, password }) =>
-            (password[low] === letter && password[high] !== letter) ||
-            (password[low] !== letter && password[high] === letter)
+            password[low] === letter ^ password[high] === letter
     )
 );
